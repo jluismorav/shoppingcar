@@ -66,7 +66,7 @@ ShoppingCarMapper.xml -> ShoppingCarMapper.java
 
 Cada "Mapper" puede ser utilizado por un servicio y este servicio a su vez puede tener varios "Mapper" en uso
 
-Primavera
+Spring
 -------
 Con Spring Framework delego la responsabilidad de inyectar los servicios, el asignador y los controladores de páginas y transacciones.
 
