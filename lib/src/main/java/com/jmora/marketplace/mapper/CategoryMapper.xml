@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+		PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper
+	namespace="com.jmora.marketplace.mapper.CategoryMapper">
+	<resultMap id="categoryResult" type="Category">
+		<result property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+	</resultMap>
+	<select id="fetchAll" resultMap="categoryResult">
+		SELECT
+			id,
+			code,
+			name
+		FROM category
+	</select>
+</mapper>

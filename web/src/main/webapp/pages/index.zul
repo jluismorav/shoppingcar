@@ -1,0 +1,202 @@
+<?page title="MarketPlace" contentType="text/html;charset=UTF-8"?>
+<?meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"?>
+<?link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"?>
+<?link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"?>
+<zk xmlns:n="native">
+	<style>body { padding-top: 56px; }</style>
+
+
+	<n:body>
+		<div hflex="true" vflex="true" sclass="container"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vm') @init('com.jmora.marketplace.viewmodel.ShoppingCarVM')">
+			<!-- Navigation -->
+			<n:nav
+				class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+				<n:div class="container">
+					<n:a class="navbar-brand" href="#">Marketplace</n:a>
+
+				</n:div>
+			</n:nav>
+
+			<!-- Page Content -->
+			<n:div>
+
+				<n:div class="row">
+
+					<n:div class="col-sm-4">
+
+
+						<n:div class="list-group">
+
+							<n:a href="#">
+								<textbox value="@bind(vm.code)"
+									hflex="true" placeholder="Seach by Code" />
+							</n:a>
+							<n:a href="#">
+								<textbox value="@bind(vm.name)"
+									hflex="true" placeholder="Seach by Name" />
+							</n:a>
+							<n:a href="#" class="list-group-item">
+								Seach by Category:
+								<listbox sclass="contributor-list"
+									model="@load(vm.categories)"
+									selectedItem="@bind(vm.selectedCategory)" mold="select">
+									<template name="model">
+										<listitem>
+											<listcell
+												label="@bind(each.name)" />
+										</listitem>
+									</template>
+
+								</listbox>
+							</n:a>
+							<button label="Search"
+								iconSclass="z-icon-search" onClick="@command('search')" />
+
+
+
+							<grid autopaging="true"
+								model="@bind(vm.listProductInShoopingCar)" id="shoppingCar"
+								span="true" emptyMessage="No products found in the result">
+								<auxhead sclass="category-center">
+									<auxheader label="Shopping Car"
+										align="center" colspan="3" rowspan="1" />
+								</auxhead>
+
+								<columns>
+									<column width="50px" />
+									<column label="Full Name" />
+									<column label="Price $" hflex="min" />
+
+								</columns>
+								<template name="model" var="item">
+									<row>
+										<cell>
+											<button
+												onClick="@command('removeShoppingCar', param=item)"
+												iconSclass="fas fa-minus-circle" />
+
+										</cell>
+										<cell>
+											<label
+												value="@bind(item.product.code)">
+											</label>
+											-
+											<label
+												value="@bind(item.product.name)">
+											</label>
+											-
+											<label
+												value="@bind(item.product.category.name)">
+											</label>
+										</cell>
+										<cell>
+											<label
+												value="@bind(item.product.price)" />
+										</cell>
+
+									</row>
+								</template>
+								<foot>
+									<footer span="6" align="right">
+										<label>Total:</label>
+										<label>$</label>
+										<label
+											value="@bind(vm.total)">
+										</label>
+									</footer>
+								</foot>
+							</grid>
+
+
+						</n:div>
+
+					</n:div>
+					<!-- /.col-lg-3 -->
+
+
+					<n:div class="col-sm-8">
+
+
+
+						<div sclass="row" id="product"
+							children="@bind(vm.products)">
+							<template name="children">
+								<n:div class="col-lg-4 col-md-6 mb-4">
+									<n:div class="card h-100">
+
+										<n:div class="card-body">
+											<n:h4 class="card-title">
+
+												<n:a href="#">
+													[
+													<label
+														value="@bind(each.code)">
+													</label>
+													]
+													<label
+														value="@bind(each.name)">
+													</label>
+												</n:a>
+											</n:h4>
+											<n:h5>
+												<label value="$">
+												</label>
+												<label
+													value="@bind(each.price)">
+												</label>
+											</n:h5>
+											<n:p class="card-text">
+												<label
+													value="@bind(each.description)">
+												</label>
+											</n:p>
+										</n:div>
+										<n:div class="card-footer">
+											<n:small>
+												<label
+													value="@bind(each.category.name)">
+												</label>
+												<div align="right">
+													<button
+														onClick="@command('addShoppingCar', param=each)"
+														iconSclass="fas fa-plus" />
+												</div>
+
+											</n:small>
+										</n:div>
+
+									</n:div>
+
+								</n:div>
+							</template>
+
+						</div>
+
+						
+
+
+
+
+
+
+
+
+
+					</n:div>
+					<!-- /.col-lg-9 -->
+
+				</n:div>
+				<!-- /.row -->
+
+			</n:div>
+			<!-- /.container -->
+
+			<!-- Footer -->
+
+		</div>
+	</n:body>
+
+
+</zk>

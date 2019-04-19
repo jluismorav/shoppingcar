@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+		PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+		
+		
+<mapper namespace="com.jmora.marketplace.mapper.ShoppingCarMapper">
+
+	<resultMap id="ShoppingCarResult" type="ShoppingCar">
+	
+		 <result property="id" 						column="id"/>
+		 <result property="code" 					column="code"/>
+		 <result property="name" 					column="name"/>
+		 <result property="price" 					column="price"/>
+		 
+		 <result property="product.id" 				column="id_product"/>
+		 <result property="product.code" 			column="product_code"/>			
+		 <result property="product.name" 			column="product_name"/>
+		 
+		 <result property="product.price" 			column="product_price"/>
+		 <result property="product.category.code" 	column="category_code"/>
+		 <result property="product.category.name" 	column="category_name"/>
+		 
+	 </resultMap>
+
+	<select id="fetchAll" resultMap="ShoppingCarResult">
+		SELECT
+			sc.id
+			,sc.id_product
+			
+			,p.code as product_code
+			,p.name as product_name
+			,p.price as product_price
+			
+			,c.code as category_code
+			,c.name  as category_name
+			
+		FROM shoppingcar sc
+		INNER JOIN product p on sc.id_product = p.id
+		INNER JOIN category c on p.id_category = c.id
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="true" 
+		keyProperty="id" parameterType="ShoppingCar">
+		insert into shoppingcar(
+			id
+			,id_product
+		) values (
+			#{id, jdbcType=NUMERIC}
+			,#{product.id, jdbcType=NUMERIC}
+		)
+	</insert>
+	
+	
+    <delete id="delete" parameterType="ShoppingCar">
+        DELETE FROM shoppingcar WHERE id = #{id}
+    </delete>
+	
+	
+	
+
+</mapper>
